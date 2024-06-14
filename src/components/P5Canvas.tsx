@@ -1,6 +1,6 @@
 import p5 from "p5";
 import { useEffect, useRef, useState } from "react";
-import { sketch } from "../assets/p5Sketch";
+import { sketch } from "../assets/brushPenSketch";
 
 const P5Canvas = () => {
   const [p5Instance, setP5Instance] = useState<p5 | null>(null);
@@ -12,9 +12,11 @@ const P5Canvas = () => {
     return myP5.remove;
   }, []);
   return (
-    <div ref={canvasRef} onClick={() => testColorSwitch(p5Instance!)}>
-      Canvas Goes here
-    </div>
+    <div
+      className="w-fit"
+      ref={canvasRef}
+      onClick={() => testColorSwitch(p5Instance!)}
+    ></div>
   );
 };
 
