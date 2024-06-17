@@ -5,7 +5,7 @@ export const sketch = (s: p5) => {
   const BACKGROUND_COLOR = 200;
   const SHADE = false;
   let prevStroke = 0;
-  let friction = 0.5;
+  let friction = 0.4;
   let spring = 0.5;
   let [vx, vy] = [0, 0];
   let [brushX, brushY] = [0, 0];
