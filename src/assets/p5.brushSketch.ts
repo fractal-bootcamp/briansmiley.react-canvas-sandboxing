@@ -13,7 +13,7 @@ export const sketch = (s: p5) => {
   let prevPosition = [0, 0];
   brush.instance(s);
   s.setup = () => {
-    s.createCanvas(500, 500, s.WEBGL);
+    s.createCanvas(s.windowWidth, s.windowHeight, s.WEBGL);
     s.angleMode(s.DEGREES);
     s.background(200);
     s.fill("red");
