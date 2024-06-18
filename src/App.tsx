@@ -3,7 +3,7 @@ import P5Canvas from "./components/P5Canvas";
 function App() {
   return (
     <>
-      <div>
+      <div className="flex justify-center items-center">
         <P5Canvas />
         {/* <KonvaCanvas/> */}
       </div>
