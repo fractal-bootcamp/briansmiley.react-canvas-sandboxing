@@ -2,9 +2,9 @@ import p5 from "p5";
 import { useEffect, useRef, useState } from "react";
 import { sketch as penSketch } from "../assets/brushPenSketch";
 import { sketch as brushSketch } from "../assets/p5.brushSketch";
-
+import { sketch as linesSketch } from "../assets/linesBrushSketch";
 //choose brush pen or p5.brush for canvas sketch
-const sketch = brushSketch;
+const sketch = linesSketch;
 const P5Canvas = () => {
   const [p5Instance, setP5Instance] = useState<p5 | null>(null);
   const canvasRef = useRef<HTMLDivElement>(null);
