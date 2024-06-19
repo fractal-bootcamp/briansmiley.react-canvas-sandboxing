@@ -13,7 +13,9 @@ export const sketch = (s: p5) => {
     currentStrokeLength: 0,
     LINES: 5,
     lineSpacing: 5,
-    lineSpacingVar: 2,
+    /**parameters which vary the spacing between the parallel lines; we may want to set these generally and not once per stroke */
+    lineSpacingVar: 0.6,
+    lineSpacingOffsets: [0],
     lineWeight: 2, //baseline line width, will be  +/-'d with granularity
     crossAxisNoiseParam: 0,
     crossAxisNoiseIncrement: 0.001,
@@ -26,13 +28,12 @@ export const sketch = (s: p5) => {
   s.draw = () => {
     //   s.background(255);
     if (s.mouseIsPressed && inStroke) {
-      s.stroke("black");
       const dx = s.mouseX - lines.brushX;
       const dy = s.mouseY - lines.brushY;
       const d = Math.sqrt(dx ** 2 + dy ** 2);
       const vx = dx * lines.spring;
       const vy = dy * lines.spring;
-      const v = Math.sqrt(vx ** 2 + vy ** 2);
+      // const v = Math.sqrt(vx ** 2 + vy ** 2);
       const prevX = lines.brushX;
       const prevY = lines.brushY;
       lines.brushX += vx;
@@ -40,7 +41,13 @@ export const sketch = (s: p5) => {
       s.beginShape();
       const steps = d / lines.lerpStepSize;
       //loop for each of the parallel lines
-      for (let j = -(lines.LINES - 1) / 2; j <= (lines.LINES - 1) / 2; j++) {
+      for (let j = 0; j < lines.LINES; j++) {
+        const lineOffset =
+          j -
+          (lines.LINES - 1) / 2 +
+          (lines.lineSpacingOffsets.length === lines.LINES
+            ? lines.lineSpacingOffsets[j]
+            : 0);
         for (let i = 0; i < steps; i++) {
           const lerpX = s.lerp(prevX, lines.brushX, i / steps);
           const lerpY = s.lerp(prevY, lines.brushY, i / steps);
@@ -49,13 +56,13 @@ export const sketch = (s: p5) => {
           );
           // const lineSpacing = lines.lineSpacing + s.random();
           s.line(
-            prevX + j * lines.lineSpacing * Math.cos(lines.penAngle),
-            prevY + j * lines.lineSpacing * Math.sin(lines.penAngle),
+            prevX + lineOffset * lines.lineSpacing * Math.cos(lines.penAngle),
+            prevY + lineOffset * lines.lineSpacing * Math.sin(lines.penAngle),
             lerpX +
-              j * lines.lineSpacing * Math.cos(lines.penAngle) +
+              lineOffset * lines.lineSpacing * Math.cos(lines.penAngle) +
               s.random(lines.roughness),
             lerpY +
-              j * lines.lineSpacing * Math.sin(lines.penAngle) +
+              lineOffset * lines.lineSpacing * Math.sin(lines.penAngle) +
               s.random(lines.roughness)
           );
         }
@@ -65,6 +72,9 @@ export const sketch = (s: p5) => {
   s.mousePressed = () => {
     inStroke = true;
     [lines.brushX, lines.brushY] = [s.mouseX, s.mouseY];
+    lines.lineSpacingOffsets = Array.from({ length: lines.LINES }, () =>
+      s.random(-lines.lineSpacingVar / 2, lines.lineSpacingVar / 2)
+    );
   };
   s.mouseReleased = () => {
     inStroke = false;
