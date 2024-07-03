@@ -1,6 +1,6 @@
 import { useState } from "react";
 import CalligraphyBrushSelector from "./components/BrushSelector";
-import CalligraphyCanvas, {
+import MultiBrushCanvas, {
   CalligraphyCanvasProps
 } from "./components/MultiBrushCanvas";
 
@@ -17,11 +17,17 @@ function App() {
   return (
     <>
       <div className="flex flex-col justify-center items-center">
-        <CalligraphyBrushSelector
-          currentBrush={currentBrush}
-          setCurrentBrush={setCurrentBrush}
-        />
-        <CalligraphyCanvas {...calligraphyCanvasProps} />
+        <div className="flex justify-between w-full items-center">
+          <div className="w-[150px]"> </div>
+          <div className="w-fit">
+            <CalligraphyBrushSelector
+              currentBrush={currentBrush}
+              setCurrentBrush={setCurrentBrush}
+            />
+          </div>
+          <div className="w-[150px] m-2">C: Clear U: Undo</div>
+        </div>
+        <MultiBrushCanvas {...calligraphyCanvasProps} />
         {/* <KonvaCanvas/> */}
       </div>
     </>
