@@ -99,7 +99,7 @@ const CalligraphyCanvas = (props: CalligraphyCanvasProps) => {
       penAngle: 75
     };
     s.setup = () => {
-      s.createCanvas(100, 200);
+      s.createCanvas(s.windowWidth, s.windowHeight * 0.8);
       s.background(BACKGROUND_COLOR);
       buffer = s.createGraphics(s.width, s.height);
       // undoBuffer = s.createGraphics(s.width, s.height)
